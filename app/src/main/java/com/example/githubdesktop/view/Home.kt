@@ -1,6 +1,7 @@
 package com.example.githubdesktop.view
 
 import android.content.res.Configuration
+import android.preference.PreferenceActivity.Header
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
@@ -16,15 +17,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Divider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import com.example.githubdesktop.ui.theme.*
 import com.example.githubdesktop.R
+import com.example.githubdesktop.components.CustomButton
+import com.example.githubdesktop.components.DescriptionText
+import com.example.githubdesktop.components.HeaderComponent
 import com.example.githubdesktop.components.Icons
 import com.example.githubdesktop.components.SubTitleBold
 
@@ -34,42 +42,11 @@ fun Home(navController: NavHostController) {
     GitHubDesktopTheme {
         Surface(
             color = MaterialTheme.colorScheme.background,
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
         ) {
             Column {
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .padding(vertical = 10.dp)
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    PageTitle(
-                        title = "Home",
-                        modifier = Modifier.weight(1f)
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(13.dp)
-                    ){
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Search Icon",
-                            tint = Blue60
-                        )
-                        Icon(
-                            imageVector = Icons.Default.AddCircle,
-                            contentDescription = "Add Icon",
-                            tint = Blue60
-                        )
-                        Icon(
-                            imageVector = Icons.Default.MoreVert,
-                            contentDescription = "Options Icon",
-                            tint = Blue60
-                        )
-                    }
-                }
+                HeaderComponent()
                 
                 Column(
                     modifier = Modifier
@@ -136,11 +113,26 @@ fun Home(navController: NavHostController) {
                         contentDescription = "Starred",
                         link = "starred",
                         navController = navController,
-                        color = Yellow30
+                        color = Yellow50
+                    )
+
+                    Divider(
+                        color= Grey50,
+                        thickness = 1.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp)
                     )
 
                     Spacer(modifier = Modifier.height(20.dp))
-
+                    SubTitleBold(title = "Favorites")
+                    Spacer(modifier = Modifier.height(20.dp))
+                    DescriptionText(title = "Add favorite repositories for quick access at any time, without having to search",
+                        modifier = Modifier.padding(horizontal = 10.dp)
+                        )
+                    Column(modifier = Modifier.padding(vertical = 5.dp)) {
+                        CustomButton(text = "ADD FAVORITES", link ="favorites" , navController =navController )
+                    }
                 }
             }
         }
